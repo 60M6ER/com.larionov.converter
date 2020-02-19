@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Конвертор валют</title>
+</head>
+<body>
+<div class="headSite" align="center">
+    <h1 th:text="'Привет, ' + ${nameUser} + '!'">Привет, Гость!</h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Выйти"/>
+    </form>
+</div>
+<div class="bodyConverter" align="center">
+    <h3>Конвертор валют</h3>
+    <form name="converter" th:action="@{/}" th:object="${converterForm}" method="post">
+        <div align="center"><input type="date"  th:field="*{date}"></div>
+        <div align="center">
+            <table>
+                <tr>
+                    <td>
+                        <select th:field="*{currencyLeft}">
+                            <option th:each="currency : ${converterForm.getCurrencies()}"
+                                    th:value="${currency.getId()}"
+                                    th:utext="${currency.getFullName()}"/>
+                        </select>
+                    </td>
+                    <td>to:</td>
+                    <td>
+                        <select th:field="*{currencyRight}">
+                            <option th:each="currency : ${converterForm.getCurrencies()}"
+                                    th:value="${currency.getId()}"
+                                    th:utext="${currency.getFullName()}"/>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="number" th:field="*{valueLeft}">
+                    </td>
+                    <td> = </td>
+                    <td>
+                        <p th:text="${converterForm.getValueRight()}">0.0</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div align="center"><input type="submit" value="Конверитировать"></div>
+    </form>
+</div>
+
+<div align="center">
+
+</div>
+
+</body>
+</html>
